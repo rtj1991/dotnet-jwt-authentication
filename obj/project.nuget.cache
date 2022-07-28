@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "ZYJd8zbLZpHidufibuQFVvUotT8GRkqXWTt/BDW2Q32LACO3A42oWhuUJPPKVJLfh9QNbPCRpH5SH/4ei+ATDQ==",
+  "dgSpecHash": "pan7IArCSfeIO9+h9OeP27yrX5mGX1VvPUdTELdCzRM+MXZSjMLWWpOTcUIJ6Z6gMvdzbtfuLCD1To26Xul4/w==",
   "success": true,
   "projectFilePath": "/home/thara/Documents/ASPDOTNET_2/old/ProductAPI/ProductAPI.csproj",
   "expectedPackageFiles": [
+    "/home/thara/.nuget/packages/automapper/11.0.1/automapper.11.0.1.nupkg.sha512",
     "/home/thara/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
-    "/home/thara/.nuget/packages/microsoft.csharp/4.5.0/microsoft.csharp.4.5.0.nupkg.sha512",
+    "/home/thara/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",
     "/home/thara/.nuget/packages/microsoft.data.sqlclient/2.1.4/microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "/home/thara/.nuget/packages/microsoft.data.sqlclient.sni.runtime/2.1.1/microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
     "/home/thara/.nuget/packages/microsoft.entityframeworkcore/6.0.7/microsoft.entityframeworkcore.6.0.7.nupkg.sha512",

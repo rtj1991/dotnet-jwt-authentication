@@ -124,3 +124,4 @@
 /home/thara/Documents/ASPDOTNET_2/old/ProductAPI/obj/Debug/net6.0/ProductAPI.pdb
 /home/thara/Documents/ASPDOTNET_2/old/ProductAPI/obj/Debug/net6.0/ProductAPI.genruntimeconfig.cache
 /home/thara/Documents/ASPDOTNET_2/old/ProductAPI/obj/Debug/net6.0/ref/ProductAPI.dll
+/home/thara/Documents/ASPDOTNET_2/old/ProductAPI/bin/Debug/net6.0/AutoMapper.dll
