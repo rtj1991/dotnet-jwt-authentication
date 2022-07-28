@@ -16,8 +16,7 @@ namespace ProductAPI.Models
         {
         }
 
-        public virtual DbSet<Databasechangelog> Databasechangelogs { get; set; } = null!;
-        public virtual DbSet<Databasechangeloglock> Databasechangeloglocks { get; set; } = null!;
+
         public virtual DbSet<Follower> Followers { get; set; } = null!;
         public virtual DbSet<Gallery> Galleries { get; set; } = null!;
         public virtual DbSet<Message> Messages { get; set; } = null!;
@@ -30,93 +29,11 @@ namespace ProductAPI.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-// #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                 optionsBuilder.UseNpgsql("Host=localhost;Database=traveller;Username=postgres;Password=root");
-            }
+                }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Databasechangelog>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("databasechangelog");
-
-                entity.Property(e => e.Author)
-                    .HasMaxLength(255)
-                    .HasColumnName("author");
-
-                entity.Property(e => e.Comments)
-                    .HasMaxLength(255)
-                    .HasColumnName("comments");
-
-                entity.Property(e => e.Contexts)
-                    .HasMaxLength(255)
-                    .HasColumnName("contexts");
-
-                entity.Property(e => e.Dateexecuted)
-                    .HasColumnType("timestamp without time zone")
-                    .HasColumnName("dateexecuted");
-
-                entity.Property(e => e.DeploymentId)
-                    .HasMaxLength(10)
-                    .HasColumnName("deployment_id");
-
-                entity.Property(e => e.Description)
-                    .HasMaxLength(255)
-                    .HasColumnName("description");
-
-                entity.Property(e => e.Exectype)
-                    .HasMaxLength(10)
-                    .HasColumnName("exectype");
-
-                entity.Property(e => e.Filename)
-                    .HasMaxLength(255)
-                    .HasColumnName("filename");
-
-                entity.Property(e => e.Id)
-                    .HasMaxLength(255)
-                    .HasColumnName("id");
-
-                entity.Property(e => e.Labels)
-                    .HasMaxLength(255)
-                    .HasColumnName("labels");
-
-                entity.Property(e => e.Liquibase)
-                    .HasMaxLength(20)
-                    .HasColumnName("liquibase");
-
-                entity.Property(e => e.Md5sum)
-                    .HasMaxLength(35)
-                    .HasColumnName("md5sum");
-
-                entity.Property(e => e.Orderexecuted).HasColumnName("orderexecuted");
-
-                entity.Property(e => e.Tag)
-                    .HasMaxLength(255)
-                    .HasColumnName("tag");
-            });
-
-            modelBuilder.Entity<Databasechangeloglock>(entity =>
-            {
-                entity.ToTable("databasechangeloglock");
-
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.Locked).HasColumnName("locked");
-
-                entity.Property(e => e.Lockedby)
-                    .HasMaxLength(255)
-                    .HasColumnName("lockedby");
-
-                entity.Property(e => e.Lockgranted)
-                    .HasColumnType("timestamp without time zone")
-                    .HasColumnName("lockgranted");
-            });
-
             modelBuilder.Entity<Follower>(entity =>
             {
                 entity.ToTable("follower");
