@@ -24,38 +24,31 @@ namespace ProductAPI.Handler
         protected async override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             if (!Request.Headers.ContainsKey("Authorization"))
-                return AuthenticateResult.Fail("No Header Found");
+                return AuthenticateResult.Fail("No header found");
 
-            var _headervalue = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
-            Console.WriteLine("------> " + _headervalue);
-            var bytes = Convert.FromBase64String(_headervalue.Parameter);
+            var _haedervalue = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
+            var bytes = Convert.FromBase64String(_haedervalue.Parameter!=null?_haedervalue.Parameter:string.Empty);
             string credentials = Encoding.UTF8.GetString(bytes);
-
             if (!string.IsNullOrEmpty(credentials))
             {
-
                 string[] array = credentials.Split(":");
                 string username = array[0];
                 string password = array[1];
-                var user = this._DBContext.Users.FirstOrDefault(item => item.Email == username && item.Password == password);
+                 var user=await this._DBContext.Users.FirstOrDefaultAsync(item=>item.Email==username && item.Password==password);
+                 if(user==null)
+                   return AuthenticateResult.Fail("UnAuthorized");
 
-                if (user == null)
-                    return AuthenticateResult.Fail("Unauthorized");
+           // Generate Ticket
+           var claim=new[]{new Claim(ClaimTypes.Name,username)};
+           var identity=new ClaimsIdentity(claim,Scheme.Name);
+           var principal=new ClaimsPrincipal(identity);
+           var ticket=new AuthenticationTicket(principal,Scheme.Name);
 
-                var claim = new[] { new Claim(ClaimTypes.Name, username) };
-                var identity = new ClaimsIdentity(claim, Scheme.Name);
-                var principal = new ClaimsPrincipal(identity);
-                var ticket = new AuthenticationTicket(principal, Scheme.Name);
-
-                Console.WriteLine("ticket======> " + ticket);
                 return AuthenticateResult.Success(ticket);
-
-            }
-            else
-            {
+            }else{
                 return AuthenticateResult.Fail("UnAuthorized");
-            }
 
+            }
         }
 
     }

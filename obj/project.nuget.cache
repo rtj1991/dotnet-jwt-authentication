@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "kMxRditRcmJakPj3KhlfJDoUeDkzm/osTfCHeB+6mStfaGrIYFUgNpCgd65L9PHFUDUe5f0O28V8A5GzxVmr3g==",
+  "dgSpecHash": "ZYJd8zbLZpHidufibuQFVvUotT8GRkqXWTt/BDW2Q32LACO3A42oWhuUJPPKVJLfh9QNbPCRpH5SH/4ei+ATDQ==",
   "success": true,
-  "projectFilePath": "/home/thara/Documents/ASPDOTNET_2/ProductAPI/ProductAPI.csproj",
+  "projectFilePath": "/home/thara/Documents/ASPDOTNET_2/old/ProductAPI/ProductAPI.csproj",
   "expectedPackageFiles": [
     "/home/thara/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
     "/home/thara/.nuget/packages/microsoft.csharp/4.5.0/microsoft.csharp.4.5.0.nupkg.sha512",

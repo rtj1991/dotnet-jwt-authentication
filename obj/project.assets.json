@@ -2094,11 +2094,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/thara/Documents/ASPDOTNET_2/ProductAPI/ProductAPI.csproj",
+      "projectUniqueName": "/home/thara/Documents/ASPDOTNET_2/old/ProductAPI/ProductAPI.csproj",
       "projectName": "ProductAPI",
-      "projectPath": "/home/thara/Documents/ASPDOTNET_2/ProductAPI/ProductAPI.csproj",
+      "projectPath": "/home/thara/Documents/ASPDOTNET_2/old/ProductAPI/ProductAPI.csproj",
       "packagesPath": "/home/thara/.nuget/packages/",
-      "outputPath": "/home/thara/Documents/ASPDOTNET_2/ProductAPI/obj/",
+      "outputPath": "/home/thara/Documents/ASPDOTNET_2/old/ProductAPI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/thara/.nuget/NuGet/NuGet.Config"
