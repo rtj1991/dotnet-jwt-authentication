@@ -2,7 +2,7 @@ using ProductAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication;
 using ProductAPI.Handler;
-// using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -19,15 +19,35 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IProductContainer, ProductContainer>();
+builder.Services.AddScoped<ITripContainer, TripContainer>();
 
-builder.Services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions,BasicAuthenticationHandler>("BasicAuthentication",null);
-builder.Services.AddDbContext<travellerContext>(options=>
+// builder.Services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
+var _authkey=builder.Configuration.GetValue<string>("JwtSettings:securitykey");
+builder.Services.AddAuthentication(item=>{
+    item.DefaultAuthenticateScheme=JwtBearerDefaults.AuthenticationScheme;
+    item.DefaultChallengeScheme=JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(item=>{
+    item.RequireHttpsMetadata=true;
+    item.SaveToken=true;
+    item.TokenValidationParameters=new TokenValidationParameters(){
+        ValidateIssuerSigningKey=true,
+        IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authkey)),
+        ValidateIssuer=false,
+        ValidateAudience=false
+    };
+});
+
+builder.Services.AddDbContext<travellerContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("travelContext")));
 
-var automapper=new MapperConfiguration(item=>item.AddProfile(new AutoMapperHandler()));
-IMapper mapper=automapper.CreateMapper();
+
+var automapper = new MapperConfiguration(item => item.AddProfile(new AutoMapperHandler()));
+IMapper mapper = automapper.CreateMapper();
 builder.Services.AddSingleton(mapper);
+
+var _jwtsetting = builder.Configuration.GetSection("JwtSettings");
+builder.Services.Configure<JwtSetting>(_jwtsetting);
 
 var app = builder.Build();
 

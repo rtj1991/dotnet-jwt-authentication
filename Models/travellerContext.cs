@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace ProductAPI.Models
 {
@@ -273,6 +270,10 @@ namespace ProductAPI.Models
                 entity.Property(e => e.TimestampModified)
                     .HasColumnType("timestamp without time zone")
                     .HasColumnName("timestamp_modified");
+
+                    entity.Property(e => e.Role)
+                    .HasMaxLength(255)
+                    .HasColumnName("role");
 
                 entity.HasMany(d => d.Roles)
                     .WithMany(p => p.Users)

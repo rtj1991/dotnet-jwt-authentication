@@ -27,6 +27,7 @@ namespace ProductAPI.Models
         public string? ProfilePic { get; set; }
         public DateTime? TimestampCreated { get; set; }
         public DateTime? TimestampModified { get; set; }
+        public string Role { get; set; }=null!;
 
         public virtual ICollection<Follower> FollowerFollowedbyNavigations { get; set; }
         public virtual ICollection<Follower> FollowerFollower1Navigations { get; set; }
