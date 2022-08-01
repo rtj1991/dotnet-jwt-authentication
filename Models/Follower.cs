@@ -12,7 +12,5 @@ namespace ProductAPI.Models
         public int? Followedby { get; set; }
         public int? Follower1 { get; set; }
 
-        public virtual User? FollowedbyNavigation { get; set; }
-        public virtual User? Follower1Navigation { get; set; }
     }
 }

@@ -5,10 +5,6 @@ namespace ProductAPI.Models
 {
     public partial class Role
     {
-        public Role()
-        {
-            Users = new HashSet<User>();
-        }
 
         public int RoleId { get; set; }
         public string? Description { get; set; }
@@ -17,6 +13,5 @@ namespace ProductAPI.Models
         public DateTime? TimestampCreated { get; set; }
         public DateTime? TimestampModified { get; set; }
 
-        public virtual ICollection<User> Users { get; set; }
     }
 }

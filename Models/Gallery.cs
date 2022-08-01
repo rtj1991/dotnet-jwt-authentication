@@ -12,6 +12,6 @@ namespace ProductAPI.Models
         public DateTime? TimestampModified { get; set; }
         public int? CreatedUser { get; set; }
 
-        public virtual User? CreatedUserNavigation { get; set; }
+    
     }
 }

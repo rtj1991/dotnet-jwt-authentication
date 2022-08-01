@@ -5,17 +5,6 @@ namespace ProductAPI.Models
 {
     public partial class User
     {
-        public User()
-        {
-            FollowerFollowedbyNavigations = new HashSet<Follower>();
-            FollowerFollower1Navigations = new HashSet<Follower>();
-            Galleries = new HashSet<Gallery>();
-            MessageReceiverNavigations = new HashSet<Message>();
-            MessageSenderNavigations = new HashSet<Message>();
-            MyTrips = new HashSet<MyTrip>();
-            Reviews = new HashSet<Review>();
-            Roles = new HashSet<Role>();
-        }
 
         public int UserId { get; set; }
         public string Dob { get; set; } = null!;
@@ -29,14 +18,5 @@ namespace ProductAPI.Models
         public DateTime? TimestampModified { get; set; }
         public string Role { get; set; }=null!;
 
-        public virtual ICollection<Follower> FollowerFollowedbyNavigations { get; set; }
-        public virtual ICollection<Follower> FollowerFollower1Navigations { get; set; }
-        public virtual ICollection<Gallery> Galleries { get; set; }
-        public virtual ICollection<Message> MessageReceiverNavigations { get; set; }
-        public virtual ICollection<Message> MessageSenderNavigations { get; set; }
-        public virtual ICollection<MyTrip> MyTrips { get; set; }
-        public virtual ICollection<Review> Reviews { get; set; }
-
-        public virtual ICollection<Role> Roles { get; set; }
     }
 }

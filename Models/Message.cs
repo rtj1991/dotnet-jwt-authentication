@@ -12,7 +12,5 @@ namespace ProductAPI.Models
         public int? Receiver { get; set; }
         public int? Sender { get; set; }
 
-        public virtual User? ReceiverNavigation { get; set; }
-        public virtual User? SenderNavigation { get; set; }
     }
 }

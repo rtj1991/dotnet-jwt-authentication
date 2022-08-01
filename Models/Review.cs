@@ -13,7 +13,6 @@ namespace ProductAPI.Models
         public int? Reviewer { get; set; }
         public int? CreatedUser { get; set; }
 
-        public virtual User? CreatedUserNavigation { get; set; }
-        public virtual MyTrip? ReviewerNavigation { get; set; }
+    
     }
 }

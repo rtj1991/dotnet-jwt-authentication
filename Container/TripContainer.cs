@@ -2,7 +2,7 @@ using ProductAPI.Models;
 using ProductAPI.Container.Entity;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-
+using Microsoft.AspNetCore.Mvc;
 
 namespace ProductAPI.Container;
 
@@ -18,13 +18,13 @@ public class TripContainer : ITripContainer
         this._mapper = _mapper;
     }
 
-    public async Task<List<TripEntity>> GetAll()
+    public async Task<List<MyTrip>> GetAll()
     {
-        List<TripEntity> resp = new List<TripEntity>();
+        List<MyTrip> resp = new List<MyTrip>();
         var _trip = await _DBContext.MyTrips.ToListAsync();
         if (_trip != null)
         {
-            resp = _mapper.Map<List<MyTrip>, List<TripEntity>>(_trip);
+            resp = _mapper.Map<List<MyTrip>, List<MyTrip>>(_trip);
         }
         return resp;
     }
@@ -61,17 +61,30 @@ public class TripContainer : ITripContainer
         }
     }
 
-    public async Task<bool> Save(TripEntity tripEntity)
+    public async Task<bool> Save(MyTrip myTrip)
     {
-
-        Console.WriteLine("tripEntity===> " + tripEntity.Description);
-        MyTrip _mytrip = new MyTrip();
-        _mytrip.Location = tripEntity.Location;
-        _mytrip.Description = tripEntity.Description;
-        this._DBContext.Add(_mytrip);
+        this._DBContext.Add(myTrip);
         await this._DBContext.SaveChangesAsync();
 
         return true;
+    }
+
+    public async Task<bool> Edit(int id, MyTrip trip)
+    {
+        
+        var my_trips = await _DBContext.MyTrips.FindAsync(id);
+    
+        my_trips.Description = trip.Description;
+        my_trips.EndDate=trip.EndDate;
+        my_trips.Location = trip.Location;
+        my_trips.StartDate=trip.StartDate;
+        my_trips.Status=trip.Status;
+        my_trips.Places = trip.Places;
+         this._DBContext.Update(my_trips);
+        await this._DBContext.SaveChangesAsync();
+
+        return true;
+
     }
 
 

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ProductAPI.Models
+﻿namespace ProductAPI.Models
 {
     public partial class MyTrip
     {
         public MyTrip()
         {
-            Reviews = new HashSet<Review>();
+            Places = new List<Places>();
         }
 
         public int Id { get; set; }
@@ -20,7 +17,8 @@ namespace ProductAPI.Models
         public DateTime? TimestampModified { get; set; }
         public int? CreatedUser { get; set; }
 
-        public virtual User? CreatedUserNavigation { get; set; }
-        public virtual ICollection<Review> Reviews { get; set; }
+        public virtual List<Places>? Places { get; set; }
+
+
     }
 }
