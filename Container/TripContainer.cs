@@ -81,6 +81,7 @@ public class TripContainer : ITripContainer
         my_trips.StartDate = trip.StartDate;
         my_trips.Status = trip.Status;
         my_trips.Place = trip.Place;
+        my_trips.TimestampModified=DateTime.UtcNow;
         this._DBContext.Update(my_trips);
         await this._DBContext.SaveChangesAsync();
 

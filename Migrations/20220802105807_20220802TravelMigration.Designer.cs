@@ -12,8 +12,8 @@ using ProductAPI.Models;
 namespace ProductAPI.Migrations
 {
     [DbContext(typeof(travellerContext))]
-    [Migration("20220801130349_20220801TravelMigration")]
-    partial class _20220801TravelMigration
+    [Migration("20220802105807_20220802TravelMigration")]
+    partial class _20220802TravelMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,61 @@ namespace ProductAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("ProductAPI.Models.Book", b =>
+                {
+                    b.Property<int>("BookId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("BookId"));
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("BookId");
+
+                    b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("ProductAPI.Models.Book_Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Book_Categories");
+                });
+
+            modelBuilder.Entity("ProductAPI.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CategoryId"));
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("text");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+                });
 
             modelBuilder.Entity("ProductAPI.Models.Follower", b =>
                 {
@@ -35,9 +90,6 @@ namespace ProductAPI.Migrations
                     b.Property<int?>("Followedby")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("Follower1")
-                        .HasColumnType("integer");
-
                     b.Property<int?>("Status")
                         .HasColumnType("integer");
 
@@ -47,7 +99,14 @@ namespace ProductAPI.Migrations
                     b.Property<DateTime?>("TimestampModified")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("follower")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Followedby");
+
+                    b.HasIndex("follower");
 
                     b.ToTable("Followers");
                 });
@@ -77,6 +136,8 @@ namespace ProductAPI.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedUser");
+
                     b.ToTable("Galleries");
                 });
 
@@ -88,7 +149,7 @@ namespace ProductAPI.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Message1")
+                    b.Property<string>("Messages")
                         .HasColumnType("text");
 
                     b.Property<int?>("Receiver")
@@ -104,6 +165,10 @@ namespace ProductAPI.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Receiver");
+
+                    b.HasIndex("Sender");
 
                     b.ToTable("Messages");
                 });
@@ -128,6 +193,9 @@ namespace ProductAPI.Migrations
                     b.Property<string>("Location")
                         .HasColumnType("text");
 
+                    b.Property<int>("MCreatedUsersUserId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -141,6 +209,8 @@ namespace ProductAPI.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MCreatedUsersUserId");
 
                     b.ToTable("MyTrips");
                 });
@@ -159,7 +229,7 @@ namespace ProductAPI.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<int>("MyTripsId")
+                    b.Property<int?>("MyTripsId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
@@ -189,10 +259,16 @@ namespace ProductAPI.Migrations
                     b.Property<int?>("CreatedUser")
                         .HasColumnType("integer");
 
+                    b.Property<int>("FCreatedUsersUserId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Rating")
                         .HasColumnType("text");
 
                     b.Property<int?>("Reviewer")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ReviewersId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("TimestampCreated")
@@ -202,6 +278,10 @@ namespace ProductAPI.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FCreatedUsersUserId");
+
+                    b.HasIndex("ReviewersId");
 
                     b.ToTable("Reviews");
                 });
@@ -283,20 +363,186 @@ namespace ProductAPI.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("ProductAPI.Models.User_Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("User_Role");
+                });
+
+            modelBuilder.Entity("ProductAPI.Models.Book_Category", b =>
+                {
+                    b.HasOne("ProductAPI.Models.Book", "Book")
+                        .WithMany("Book_Categories")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProductAPI.Models.Category", "Category")
+                        .WithMany("Book_Categories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("ProductAPI.Models.Follower", b =>
+                {
+                    b.HasOne("ProductAPI.Models.User", "followed_by")
+                        .WithMany("followed_by")
+                        .HasForeignKey("Followedby");
+
+                    b.HasOne("ProductAPI.Models.User", "followers")
+                        .WithMany("Followers")
+                        .HasForeignKey("follower")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("followed_by");
+
+                    b.Navigation("followers");
+                });
+
+            modelBuilder.Entity("ProductAPI.Models.Gallery", b =>
+                {
+                    b.HasOne("ProductAPI.Models.User", "GCreateduser")
+                        .WithMany("GCreateduser")
+                        .HasForeignKey("CreatedUser");
+
+                    b.Navigation("GCreateduser");
+                });
+
+            modelBuilder.Entity("ProductAPI.Models.Message", b =>
+                {
+                    b.HasOne("ProductAPI.Models.User", "Receivers")
+                        .WithMany("Receivers")
+                        .HasForeignKey("Receiver");
+
+                    b.HasOne("ProductAPI.Models.User", "Senders")
+                        .WithMany("Senders")
+                        .HasForeignKey("Sender");
+
+                    b.Navigation("Receivers");
+
+                    b.Navigation("Senders");
+                });
+
+            modelBuilder.Entity("ProductAPI.Models.MyTrip", b =>
+                {
+                    b.HasOne("ProductAPI.Models.User", "MCreatedUsers")
+                        .WithMany("MCreatedUsers")
+                        .HasForeignKey("MCreatedUsersUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MCreatedUsers");
+                });
+
             modelBuilder.Entity("ProductAPI.Models.Places", b =>
                 {
                     b.HasOne("ProductAPI.Models.MyTrip", "MyTrips")
                         .WithMany("Place")
-                        .HasForeignKey("MyTripsId")
+                        .HasForeignKey("MyTripsId");
+
+                    b.Navigation("MyTrips");
+                });
+
+            modelBuilder.Entity("ProductAPI.Models.Review", b =>
+                {
+                    b.HasOne("ProductAPI.Models.User", "FCreatedUsers")
+                        .WithMany("FCreatedUsers")
+                        .HasForeignKey("FCreatedUsersUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("MyTrips");
+                    b.HasOne("ProductAPI.Models.MyTrip", "Reviewers")
+                        .WithMany("Reviews")
+                        .HasForeignKey("ReviewersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FCreatedUsers");
+
+                    b.Navigation("Reviewers");
+                });
+
+            modelBuilder.Entity("ProductAPI.Models.User_Role", b =>
+                {
+                    b.HasOne("ProductAPI.Models.Role", "Roles")
+                        .WithMany("user_Roles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProductAPI.Models.User", "Users")
+                        .WithMany("user_Roles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Roles");
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("ProductAPI.Models.Book", b =>
+                {
+                    b.Navigation("Book_Categories");
+                });
+
+            modelBuilder.Entity("ProductAPI.Models.Category", b =>
+                {
+                    b.Navigation("Book_Categories");
                 });
 
             modelBuilder.Entity("ProductAPI.Models.MyTrip", b =>
                 {
                     b.Navigation("Place");
+
+                    b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("ProductAPI.Models.Role", b =>
+                {
+                    b.Navigation("user_Roles");
+                });
+
+            modelBuilder.Entity("ProductAPI.Models.User", b =>
+                {
+                    b.Navigation("FCreatedUsers");
+
+                    b.Navigation("Followers");
+
+                    b.Navigation("GCreateduser");
+
+                    b.Navigation("MCreatedUsers");
+
+                    b.Navigation("Receivers");
+
+                    b.Navigation("Senders");
+
+                    b.Navigation("followed_by");
+
+                    b.Navigation("user_Roles");
                 });
 #pragma warning restore 612, 618
         }

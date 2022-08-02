@@ -1,23 +1,25 @@
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace ProductAPI.Models
 {
-    public class Places
+    public partial class User_Role
     {
+
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        public int UserId { get; set; }
+        public User? Users { get; set; }
 
-        public String? Name { get; set; }
-        public String? Description { get; set; }
-        public String? Coordinates { get; set; }
-
-        [ForeignKey("TripId")]
-        public int TripId { get; set; }
-        
+        public int RoleId { get; set; }
         [JsonIgnore]
-        public virtual MyTrip? MyTrips { get; set; }
+        public Role? Roles { get; set; }
+
+
     }
 }
