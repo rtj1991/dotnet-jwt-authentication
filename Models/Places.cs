@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ProductAPI.Models
 {
@@ -12,8 +13,11 @@ namespace ProductAPI.Models
         public String? Description { get; set; }
         public String? Coordinates { get; set; }
 
-        [ForeignKey("MyTrip")]
+        [ForeignKey("TripId")]
         public int TripId { get; set; }
-        public virtual MyTrip? MyTrip { get; set; }
+        
+        [Required]
+        [JsonIgnore]
+        public virtual MyTrip? MyTrips { get; set; }
     }
 }

@@ -15,13 +15,11 @@ namespace ProductAPI.Models
         public virtual DbSet<Review> Reviews { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
-
         public virtual DbSet<Places> Places { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
         
-
         }
     }
 }

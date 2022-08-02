@@ -1,10 +1,13 @@
-﻿namespace ProductAPI.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+
+namespace ProductAPI.Models
 {
     public partial class MyTrip
     {
         public MyTrip()
         {
-            Places = new List<Places>();
+            Place = new HashSet<Places>();
         }
 
         public int Id { get; set; }
@@ -17,7 +20,7 @@
         public DateTime? TimestampModified { get; set; }
         public int? CreatedUser { get; set; }
 
-        public virtual List<Places>? Places { get; set; }
+        public virtual ICollection<Places> Place { get; set; }
 
 
     }

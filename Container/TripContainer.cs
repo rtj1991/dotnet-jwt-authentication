@@ -21,7 +21,8 @@ public class TripContainer : ITripContainer
     public async Task<List<MyTrip>> GetAll()
     {
         List<MyTrip> resp = new List<MyTrip>();
-        var _trip = await _DBContext.MyTrips.ToListAsync();
+    
+        var _trip = _DBContext.MyTrips.Include(b => b.Place).ToList();
         if (_trip != null)
         {
             resp = _mapper.Map<List<MyTrip>, List<MyTrip>>(_trip);
@@ -71,16 +72,16 @@ public class TripContainer : ITripContainer
 
     public async Task<bool> Edit(int id, MyTrip trip)
     {
-        
+
         var my_trips = await _DBContext.MyTrips.FindAsync(id);
-    
+
         my_trips.Description = trip.Description;
-        my_trips.EndDate=trip.EndDate;
+        my_trips.EndDate = trip.EndDate;
         my_trips.Location = trip.Location;
-        my_trips.StartDate=trip.StartDate;
-        my_trips.Status=trip.Status;
-        my_trips.Places = trip.Places;
-         this._DBContext.Update(my_trips);
+        my_trips.StartDate = trip.StartDate;
+        my_trips.Status = trip.Status;
+        my_trips.Place = trip.Place;
+        this._DBContext.Update(my_trips);
         await this._DBContext.SaveChangesAsync();
 
         return true;

@@ -147,23 +147,24 @@ namespace ProductAPI.Migrations
                     Name = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
                     Coordinates = table.Column<string>(type: "text", nullable: true),
-                    TripId = table.Column<int>(type: "integer", nullable: false)
+                    TripId = table.Column<int>(type: "integer", nullable: false),
+                    MyTripsId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Places", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Places_MyTrips_TripId",
-                        column: x => x.TripId,
+                        name: "FK_Places_MyTrips_MyTripsId",
+                        column: x => x.MyTripsId,
                         principalTable: "MyTrips",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Places_TripId",
+                name: "IX_Places_MyTripsId",
                 table: "Places",
-                column: "TripId");
+                column: "MyTripsId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

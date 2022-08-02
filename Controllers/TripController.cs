@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using ProductAPI.Container.Entity;
 using ProductAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProductAPI.Controllers;
 
@@ -11,11 +12,13 @@ namespace ProductAPI.Controllers;
 public class TripController : ControllerBase
 {
     private readonly ITripContainer _DBContext;
+    private readonly travellerContext traveller;
 
-    public TripController(ITripContainer _DBContext)
+    public TripController(ITripContainer _DBContext, travellerContext _traveller)
     {
 
         this._DBContext = _DBContext;
+        this.traveller = _traveller;
     }
 
     // [Authorize(Roles = "USERS,USERS,PREMIUM")]
@@ -24,6 +27,13 @@ public class TripController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var trip = await this._DBContext.GetAll();
+        return Ok(trip);
+    }
+
+    [HttpGet("Test")]
+    public ActionResult<MyTrip> Test()
+    {
+        var trip = traveller.MyTrips.Include(b => b.Place).ToList();
         return Ok(trip);
     }
 
@@ -50,10 +60,10 @@ public class TripController : ControllerBase
         return Ok(true);
     }
 
-     [HttpPost("Edit/{id}")]
-    public async Task<IActionResult> Edit(int id,MyTrip mytrip)
-    {Console.WriteLine("triptri=====> "+mytrip);
-        var my_trip = await this._DBContext.Edit(id,mytrip);
+    [HttpPost("Edit/{id}")]
+    public async Task<IActionResult> Edit(int id, MyTrip mytrip)
+    {
+        var my_trip = await this._DBContext.Edit(id, mytrip);
         return Ok(true);
     }
 

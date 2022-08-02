@@ -12,7 +12,7 @@ using ProductAPI.Models;
 namespace ProductAPI.Migrations
 {
     [DbContext(typeof(travellerContext))]
-    [Migration("20220801084302_20220801TravelMigration")]
+    [Migration("20220801130349_20220801TravelMigration")]
     partial class _20220801TravelMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -159,6 +159,9 @@ namespace ProductAPI.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
+                    b.Property<int>("MyTripsId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -167,7 +170,7 @@ namespace ProductAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TripId");
+                    b.HasIndex("MyTripsId");
 
                     b.ToTable("Places");
                 });
@@ -282,18 +285,18 @@ namespace ProductAPI.Migrations
 
             modelBuilder.Entity("ProductAPI.Models.Places", b =>
                 {
-                    b.HasOne("ProductAPI.Models.MyTrip", "MyTrip")
-                        .WithMany("Places")
-                        .HasForeignKey("TripId")
+                    b.HasOne("ProductAPI.Models.MyTrip", "MyTrips")
+                        .WithMany("Place")
+                        .HasForeignKey("MyTripsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("MyTrip");
+                    b.Navigation("MyTrips");
                 });
 
             modelBuilder.Entity("ProductAPI.Models.MyTrip", b =>
                 {
-                    b.Navigation("Places");
+                    b.Navigation("Place");
                 });
 #pragma warning restore 612, 618
         }
