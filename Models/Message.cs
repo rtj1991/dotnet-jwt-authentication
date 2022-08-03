@@ -20,7 +20,7 @@ namespace ProductAPI.Models
         [ForeignKey("Receiver")]
         public int? Receiver { get; set; }
         [JsonIgnore]
-        public virtual User Receivers { get; set; }
+        public virtual User? Receivers { get; set; }
 
         [ForeignKey("Sender")]
         public int? Sender { get; set; }

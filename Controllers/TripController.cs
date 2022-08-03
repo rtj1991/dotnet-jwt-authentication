@@ -30,11 +30,12 @@ public class TripController : ControllerBase
         return Ok(trip);
     }
 
-    [HttpGet("Test")]
-    public ActionResult<MyTrip> Test()
+    [HttpGet("Test/{id}")]
+    public ActionResult<MyTrip> Test(int id)
     {
-        var trip = traveller.MyTrips.Include(b => b.Place).ToList();
-        return Ok(trip);
+        // var trip = traveller.MyTrips.Include(b => b.Place).ToList();
+        var my_trips =  traveller.MyTrips.Include(m=>m.Place).Where(m=>m.Id==id);
+        return Ok(my_trips);
     }
 
 

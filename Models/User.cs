@@ -29,10 +29,10 @@ namespace ProductAPI.Models
         public virtual ICollection<Follower>? Followers { get; set; }
         public virtual ICollection<Follower>? followed_by { get; set; }
         public virtual ICollection<Review>? FCreatedUsers { get; set; }
-        public virtual ICollection<MyTrip> MCreatedUsers { get; set; }
-        public virtual ICollection<Message> Receivers { get; set; }
-        public virtual ICollection<Message> Senders { get; set; }
-        public virtual ICollection<Gallery> GCreateduser { get; set; }
+        public virtual ICollection<MyTrip>? MCreatedUsers { get; set; }
+        public virtual ICollection<Message>? Receivers { get; set; }
+        public virtual ICollection<Message>? Senders { get; set; }
+        public virtual ICollection<Gallery>? GCreateduser { get; set; }
 
     }
 }

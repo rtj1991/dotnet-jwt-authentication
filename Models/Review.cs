@@ -23,12 +23,12 @@ namespace ProductAPI.Models
         [ForeignKey("Reviewer")]
         public int? Reviewer { get; set; }
         [JsonIgnore]
-        public MyTrip Reviewers { get; set; }
+        public MyTrip? Reviewers { get; set; }
 
         [ForeignKey("CreatedUser")]
         public int? CreatedUser { get; set; }
         [JsonIgnore]
-        public virtual User FCreatedUsers { get; set; }
+        public virtual User? FCreatedUsers { get; set; }
 
 
     }

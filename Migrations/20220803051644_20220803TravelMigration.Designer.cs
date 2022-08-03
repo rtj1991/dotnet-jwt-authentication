@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProductAPI.Models;
@@ -11,9 +12,10 @@ using ProductAPI.Models;
 namespace ProductAPI.Migrations
 {
     [DbContext(typeof(travellerContext))]
-    partial class travellerContextModelSnapshot : ModelSnapshot
+    [Migration("20220803051644_20220803TravelMigration")]
+    partial class _20220803TravelMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

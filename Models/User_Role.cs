@@ -20,6 +20,5 @@ namespace ProductAPI.Models
         [JsonIgnore]
         public Role? Roles { get; set; }
 
-
     }
 }

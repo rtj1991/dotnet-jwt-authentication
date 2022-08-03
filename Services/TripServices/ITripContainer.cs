@@ -7,7 +7,7 @@ public interface ITripContainer
 
      Task<List<MyTrip>> GetAll();
 
-     Task<TripEntity> GetById(int id);
+     Task<MyTrip> GetById(int id);
 
      Task<bool>Remove(int id);
 
