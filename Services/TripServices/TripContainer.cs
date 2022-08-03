@@ -2,7 +2,6 @@ using ProductAPI.Models;
 using ProductAPI.Container.Entity;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 
 namespace ProductAPI.Container;
 
@@ -18,7 +17,7 @@ public class TripContainer : ITripContainer
         this._mapper = _mapper;
     }
 
-    public async Task<List<MyTrip>> GetAll()
+    public Task<List<MyTrip>> GetAll()
     {
         List<MyTrip> resp = new List<MyTrip>();
 
@@ -27,7 +26,11 @@ public class TripContainer : ITripContainer
         {
             resp = _mapper.Map<List<MyTrip>, List<MyTrip>>(_trip);
         }
-        return resp;
+        else
+        {
+            throw new NullReferenceException("Getting Null while fetching My Trip details");
+        }
+        return Task.FromResult(resp);
     }
 
     public async Task<MyTrip> GetById(int id)
@@ -44,15 +47,13 @@ public class TripContainer : ITripContainer
             }
             else
             {
-                throw new ApplicationException("Getting Null while fetching my trip details");
+                throw new NullReferenceException("Getting Null while fetching Places details");
             }
         }
-        catch (System.Exception)
+        catch (ArgumentNullException e)
         {
-            throw new ApplicationException("Getting Errors while fetching my trip details");
+            throw new ArgumentNullException("Getting Error while Argument Pass " + e.Message);
         }
-
-
     }
 
     public async Task<bool> Remove(int id)
@@ -63,7 +64,7 @@ public class TripContainer : ITripContainer
             var my_trips = await _DBContext.MyTrips.FindAsync(id);
             if (my_trips == null)
             {
-                throw new ArgumentNullException();
+                throw new NullReferenceException("Getting Null while fetching My Trip details");
             }
             else
             {
@@ -72,10 +73,9 @@ public class TripContainer : ITripContainer
                 return true;
             }
         }
-        catch (System.Exception)
+        catch (ArgumentNullException e)
         {
-
-            throw new ApplicationException("Getting Errors while fetching my trip details");
+            throw new ArgumentNullException("Getting Error while Argument Pass " + e.Message);
         }
 
     }
@@ -96,12 +96,60 @@ public class TripContainer : ITripContainer
             var my_trips = await _DBContext.MyTrips.FindAsync(id);
             if (my_trips != null)
             {
-                my_trips.Description = trip.Description;
-                my_trips.EndDate = trip.EndDate;
-                my_trips.Location = trip.Location;
-                my_trips.StartDate = trip.StartDate;
-                my_trips.Status = trip.Status;
-                my_trips.Place = trip.Place;
+                if (trip.Description != null)
+                {
+                    my_trips.Description = trip.Description;
+                }
+                else
+                {
+                    my_trips.Description = my_trips.Description;
+                }
+
+                if (trip.EndDate != null)
+                {
+                    my_trips.EndDate = trip.EndDate;
+                }
+                else
+                {
+                    my_trips.EndDate = my_trips.EndDate;
+                }
+
+                if (trip.Location != null)
+                {
+                    my_trips.Location = trip.Location;
+                }
+                else
+                {
+                    my_trips.Location = my_trips.Location;
+                }
+                if (trip.StartDate != null)
+                {
+                    my_trips.StartDate = trip.StartDate;
+                }
+                else
+                {
+                    my_trips.StartDate = my_trips.StartDate;
+                }
+
+                if (trip.Status != null)
+                {
+                    my_trips.Status = trip.Status;
+                }
+                else
+                {
+                    my_trips.Status = my_trips.Status;
+                }
+
+                if (trip.Place != null)
+                {
+                    my_trips.Place = trip.Place;
+                }
+                else
+                {
+                    my_trips.Place = my_trips.Place;
+                }
+
+
                 my_trips.TimestampModified = DateTime.UtcNow;
                 this._DBContext.Update(my_trips);
                 await this._DBContext.SaveChangesAsync();
@@ -110,14 +158,12 @@ public class TripContainer : ITripContainer
             }
             else
             {
-                throw new ArgumentNullException();
+                throw new NullReferenceException("Getting Null while fetching My Trip details");
             }
-
         }
-        catch (System.Exception)
+        catch (ArgumentNullException e)
         {
-
-            throw new ArgumentNullException();
+            throw new ArgumentNullException("Getting Error while Argument Pass " + e.Message);
         }
 
     }

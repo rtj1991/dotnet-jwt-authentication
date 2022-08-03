@@ -15,7 +15,7 @@ namespace ProductAPI.Models
         public String? Coordinates { get; set; }
 
         [ForeignKey("TripId")]
-        public int TripId { get; set; }
+        public int? TripId { get; set; }
         
         [JsonIgnore]
         public virtual MyTrip? MyTrips { get; set; }

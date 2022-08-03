@@ -31,7 +31,7 @@ namespace ProductAPI.Models
         public int? CreatedUser { get; set; }
         [JsonIgnore]
         public virtual User? MCreatedUsers { get; set; }
-        public virtual ICollection<Places>? Place { get; set; }
+        public virtual ICollection<Places> Place { get; set; }
 
         public virtual ICollection<Review>? Reviews { get; set; }
 

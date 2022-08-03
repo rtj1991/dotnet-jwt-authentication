@@ -11,8 +11,8 @@ public interface IPlaceContainer
 
      Task<bool>Remove(int id);
 
-     Task<bool>Save(Places trip);
+     Task<bool>Save(Places places);
 
-     Task<bool>Edit(int id,Places trip);
+     Task<bool>Edit(int id,Places places);
 
 }

@@ -18,24 +18,47 @@ public class PlaceController : ControllerBase
     private readonly IPlaceContainer placeContainer;
 
 
-    public PlaceController(travellerContext _DBContext,IPlaceContainer _placeContainer)
+    public PlaceController(travellerContext _DBContext, IPlaceContainer _placeContainer)
     {
 
         this._DBContext = _DBContext;
-        this.placeContainer=_placeContainer;
+        this.placeContainer = _placeContainer;
     }
     [HttpGet("GetAll")]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
-        var places=this.placeContainer.GetAll();
-        
+        var places = await this.placeContainer.GetAll();
+
         return Ok(places);
     }
 
+
     [HttpGet("GetById/{id}")]
-    public IActionResult GetById(int id)
+    public async Task<IActionResult> GetById(int id)
     {
-        var place=this.placeContainer.GetById(id);
+        var place = await this.placeContainer.GetById(id);
+        return Ok(place);
+    }
+
+    [HttpDelete("Remove/{id}")]
+    public async Task<IActionResult> Remove(int id)
+    {
+        var place = await this.placeContainer.Remove(id);
+        return Ok(true);
+    }
+
+    [HttpPost("Create")]
+    public async Task<IActionResult> Create(Places places)
+    {
+        await this.placeContainer.Save(places);
+        return Ok(true);
+    }
+
+    [HttpPost("Edit/{id}")]
+    public async Task<IActionResult> Edit(int id, Places places)
+    {
+        var my_trip = await this.placeContainer.Edit(id, places);
+        return Ok(true);
     }
 
 }

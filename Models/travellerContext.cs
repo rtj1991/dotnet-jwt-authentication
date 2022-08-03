@@ -57,6 +57,12 @@ namespace ProductAPI.Models
             .HasOne(b => b.GCreateduser)
             .WithMany(ba => ba.GCreateduser)
             .HasForeignKey(bi => bi.CreatedUser);
+
+            modelBuilder.Entity<Places>()
+            .HasOne(b => b.MyTrips)
+            .WithMany(ba => ba.Place)
+            .HasForeignKey(bi => bi.TripId)
+            .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

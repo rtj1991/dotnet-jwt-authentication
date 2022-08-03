@@ -2,7 +2,6 @@ using ProductAPI.Models;
 using ProductAPI.Container.Entity;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 
 namespace ProductAPI.Container;
 
@@ -18,7 +17,7 @@ public class PlaceContainer : IPlaceContainer
         this._mapper = _mapper;
     }
 
-    public async Task<List<Places>> GetAll()
+    public Task<List<Places>> GetAll()
     {
         List<Places> resp = new List<Places>();
 
@@ -27,12 +26,15 @@ public class PlaceContainer : IPlaceContainer
         {
             resp = _mapper.Map<List<Places>, List<Places>>(_place);
         }
-        return resp;
+        else
+        {
+            throw new NullReferenceException("Getting Null while fetching Places details");
+        }
+        return Task.FromResult(resp);
     }
 
     public async Task<Places> GetById(int id)
     {
-
         try
         {
 
@@ -45,15 +47,13 @@ public class PlaceContainer : IPlaceContainer
             }
             else
             {
-                throw new ApplicationException("Getting Null while fetching my trip details");
+                throw new NullReferenceException("Getting Null while fetching Places details");
             }
         }
-        catch (System.Exception)
+        catch (ArgumentNullException e)
         {
-            throw new ApplicationException("Getting Errors while fetching my trip details");
+            throw new ArgumentNullException("Getting Error while Argument Pass " + e.Message);
         }
-
-
     }
 
     public async Task<bool> Remove(int id)
@@ -64,7 +64,7 @@ public class PlaceContainer : IPlaceContainer
             var place = await _DBContext.Places.FindAsync(id);
             if (place == null)
             {
-                throw new ArgumentNullException();
+                throw new NullReferenceException("Getting Null while fetching Places details");
             }
             else
             {
@@ -73,10 +73,9 @@ public class PlaceContainer : IPlaceContainer
                 return true;
             }
         }
-        catch (System.Exception)
+        catch (ArgumentNullException e)
         {
-
-            throw new ApplicationException("Getting Errors while fetching my trip details");
+            throw new ArgumentNullException("Getting Error while Argument Pass " + e.Message);
         }
 
     }
@@ -97,10 +96,42 @@ public class PlaceContainer : IPlaceContainer
             var _places = await _DBContext.Places.FindAsync(id);
             if (_places != null)
             {
-                _places.Description = places.Description;
-                _places.Coordinates = places.Coordinates;
-                _places.Name = places.Name;
-                _places.TripId = places.TripId;
+                if (places.Description != null)
+                {
+                    _places.Description = places.Description;
+                }
+                else
+                {
+                    _places.Description = _places.Description;
+                }
+
+                if (places.Coordinates != null)
+                {
+                    _places.Coordinates = places.Coordinates;
+                }
+                else
+                {
+                    _places.Coordinates = _places.Coordinates;
+                }
+
+                if (places.Name != null)
+                {
+                    _places.Name = places.Name;
+                }
+                else
+                {
+                    _places.Name = _places.Name;
+                }
+
+                if (!places.TripId.Equals(null))
+                {
+                    _places.TripId = places.TripId;
+                }
+                else
+                {
+                    _places.TripId = _places.TripId;
+                }
+
 
                 this._DBContext.Update(_places);
                 await this._DBContext.SaveChangesAsync();
@@ -109,16 +140,12 @@ public class PlaceContainer : IPlaceContainer
             }
             else
             {
-                throw new ArgumentNullException();
+                throw new NullReferenceException("Getting Null while fetching Places details");
             }
-
         }
-        catch (System.Exception)
+        catch (ArgumentNullException e)
         {
-
-            throw new ArgumentNullException();
+            throw new ArgumentNullException("Getting Error while Argument Pass " + e.Message);
         }
-
     }
-
 }

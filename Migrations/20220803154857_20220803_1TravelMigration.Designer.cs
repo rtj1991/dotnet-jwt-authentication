@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProductAPI.Models;
@@ -11,9 +12,10 @@ using ProductAPI.Models;
 namespace ProductAPI.Migrations
 {
     [DbContext(typeof(travellerContext))]
-    partial class travellerContextModelSnapshot : ModelSnapshot
+    [Migration("20220803154857_20220803_1TravelMigration")]
+    partial class _20220803_1TravelMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,6 +229,9 @@ namespace ProductAPI.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
+                    b.Property<int?>("MyTripsId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -235,7 +240,7 @@ namespace ProductAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TripId");
+                    b.HasIndex("MyTripsId");
 
                     b.ToTable("Places");
                 });
@@ -454,8 +459,7 @@ namespace ProductAPI.Migrations
                 {
                     b.HasOne("ProductAPI.Models.MyTrip", "MyTrips")
                         .WithMany("Place")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("MyTripsId");
 
                     b.Navigation("MyTrips");
                 });
