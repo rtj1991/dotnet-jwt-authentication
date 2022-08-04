@@ -57,6 +57,7 @@ public class PlaceController : ControllerBase
     [HttpPost("Edit/{id}")]
     public async Task<IActionResult> Edit(int id, Places places)
     {
+
         var my_trip = await this.placeContainer.Edit(id, places);
         return Ok(true);
     }
